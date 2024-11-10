@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def main():
-    base_url = 'https://tsw.pl/wystawcy/500F798ACDCC/'
+    base_url = 'https://www.amcham.org.eg/membership/members-database?keyword=&keywordtype=company&sector=0&subsector=0&membershiptype=0'
     r = requests.get(base_url, verify=False)
     bs = BeautifulSoup(r.content)
     
