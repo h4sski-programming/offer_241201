@@ -5,16 +5,18 @@ from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 
 def main():
+    
+    # Setup Selenium
     service = Service("/snap/bin/geckodriver")
     driver = webdriver.Firefox(service=service)
     # driver.implicitly_wait(5)
-    base_url = 'https://www.amcham.org.eg/membership/members-database?keyword=&keywordtype=company&sector=0&subsector=0&membershiptype=0'
     
+    # URL variable
+    base_url = 'https://tsw.pl/wystawcy'
+    
+    # Getting the page and sleep for load all of the content
     driver.get(base_url)
-    time.sleep(7)
-    
-    title = driver.title
-    print(title)
+    time.sleep(2)
     
     ######################################
     
@@ -22,13 +24,22 @@ def main():
     
     bs = BeautifulSoup(page_source, 'html.parser')
     
-    item = bs.div(class_='thumbnail thumbnail-news')
-    data = item
-    print(data)
+    wystawcy = bs.find_all('div', 'exhibitors-main-container ng-scope')
+    url_wystawcow = []
+    for w in wystawcy[:2]:
+        number = w.get('url').split('/')[-1]
+        url_wystawcow.append('/'.join([base_url, number]))
     
-    # p = bs.find_all('div', 'exhibitors-main-container')
+    print(url_wystawcow)
+    
+    # item = bs.div(class_='thumbnail thumbnail-news')
+    # data = item
+    # print()
+    
+    # p = bs.find_all('div', 'thumbnail thumbnail-news')
+    # p = bs.find_all('a', 'more dot ddd-keep')
     # for pp in p:
-    #     print(pp['url'])
+    #     print(pp)
     
     driver.quit()
 
